@@ -38,7 +38,17 @@ CREATE TABLE proyAdmin.Proveedores (
 );
 GO
 
--- 3. Categorías de Productos
+-- 3. Clientes	
+CREATE TABLE proyAdmin.Clientes (
+    IdCliente INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(100) NOT NULL,
+    Telefono NVARCHAR(20),
+    Email NVARCHAR(100),
+    Direccion NVARCHAR(200)
+);
+GO
+
+-- 4. Categorías de Productos
 CREATE TABLE proyAdmin.Categorias (
     IdCategoria INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
@@ -46,7 +56,7 @@ CREATE TABLE proyAdmin.Categorias (
 );
 GO
 
--- 4. Productos
+-- 5. Productos
 CREATE TABLE proyAdmin.Productos (
     IdProducto INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
@@ -59,7 +69,7 @@ CREATE TABLE proyAdmin.Productos (
 );
 GO
 
--- 5. Bodegas
+-- 6. Bodegas
 CREATE TABLE proyAdmin.Bodegas (
     IdBodega INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100),
@@ -71,7 +81,7 @@ CREATE TABLE proyAdmin.Bodegas (
 );
 GO
 
--- 6. Inventario (Stock actual por producto y por bodega)
+-- 7. Inventario (Stock actual por producto y por bodega)
 CREATE TABLE proyAdmin.Inventario (
     IdInventario INT PRIMARY KEY IDENTITY(1,1),
     IdProducto INT,
@@ -86,7 +96,7 @@ CREATE TABLE proyAdmin.Inventario (
 );
 GO
 
--- 7. Entradas (Ingreso de productos a bodegas)
+-- 8. Entradas (Ingreso de productos a bodegas)
 CREATE TABLE proyAdmin.Entradas (
     IdEntrada INT PRIMARY KEY IDENTITY(1,1),
     FechaEntrada DATETIME DEFAULT GETDATE(),
@@ -103,7 +113,7 @@ CREATE TABLE proyAdmin.Entradas (
 );
 GO
 
--- 8. Detalle de Entradas
+-- 9. Detalle de Entradas
 CREATE TABLE proyAdmin.DetalleEntradas (
     IdDetalleEntrada INT PRIMARY KEY IDENTITY(1,1),
     IdEntrada INT,
@@ -119,7 +129,7 @@ CREATE TABLE proyAdmin.DetalleEntradas (
 );
 GO
 
--- 9. Salidas (Egreso de productos de bodegas)
+-- 10. Salidas (Egreso de productos de bodegas)
 CREATE TABLE proyAdmin.Salidas (
     IdSalida INT PRIMARY KEY IDENTITY(1,1),
     FechaSalida DATETIME DEFAULT GETDATE(),
@@ -134,7 +144,7 @@ CREATE TABLE proyAdmin.Salidas (
 );
 GO
 
--- 10. Detalle de Salidas
+-- 11. Detalle de Salidas
 CREATE TABLE proyAdmin.DetalleSalidas (
     IdDetalleSalida INT PRIMARY KEY IDENTITY(1,1),
     IdSalida INT,
@@ -142,7 +152,7 @@ CREATE TABLE proyAdmin.DetalleSalidas (
     Cantidad INT NOT NULL,
     CONSTRAINT CHK_Cantidad_Salida CHECK (Cantidad > 0),
     CONSTRAINT FK_DetalleSalidas_Salidas FOREIGN KEY (IdSalida) 
-        REFERENCES proyAdmin.Salidas(IdSalida) ON DELETE CASCADE ON UPDATE CASCADE,
+	REFERENCES proyAdmin.Salidas(IdSalida) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_DetalleSalidas_Productos FOREIGN KEY (IdProducto) 
         REFERENCES proyAdmin.Productos(IdProducto) ON DELETE CASCADE ON UPDATE CASCADE
 );
