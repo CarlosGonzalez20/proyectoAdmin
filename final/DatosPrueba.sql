@@ -33,6 +33,15 @@ INSERT INTO Proveedores (Nombre, Telefono, Email, Direccion) VALUES
 ('Importadora Textil Centroamericana', '2265-4321', 'textiles@importadoratextil.com', 'Zona Franca, Coyol, Alajuela'),
 ('Suministros de Oficina Moderna', '2287-6543', 'clientes@oficinamoderna.com', 'Paseo Colón, San José');
 
+ --   Insert Clientes (5 suppliers)
+INSERT INTO Clientes (Nombre, Telefono, Email, Direccion) VALUES 
+    ('Coca-Cola Distribuciones', '555-1001', 'ventas@cocacola.com', 'Avenida Central 123, Ciudad'),
+    ('Distribuidora La Moderna', '555-1002', 'contacto@lamoderna.com', 'Calle 45, Zona Industrial'),
+    ('Ferretería El Tornillo', '555-1003', 'eltornillo@correo.com', 'Boulevard Norte 500, Ciudad'),
+    ('Grupo Logístico Norte', '555-1004', 'info@lognorte.com', 'Ruta Nacional 7, Km 15'),
+    ('Supermercado Central', '555-1005', 'compras@supercentral.com', 'Av. Las Américas 1200'),
+
+
 -- Categorías (sin cambios necesarios)
 INSERT INTO Categorias (Nombre, Descripcion) VALUES
 ('Material de Oficina', 'Artículos para uso en oficina'),
