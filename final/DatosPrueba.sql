@@ -40,7 +40,10 @@ INSERT INTO Clientes (Nombre, Telefono, Email, Direccion) VALUES
     ('Ferretería El Tornillo', '555-1003', 'eltornillo@correo.com', 'Boulevard Norte 500, Ciudad'),
     ('Grupo Logístico Norte', '555-1004', 'info@lognorte.com', 'Ruta Nacional 7, Km 15'),
     ('Supermercado Central', '555-1005', 'compras@supercentral.com', 'Av. Las Américas 1200'),
-
+    ('TecnoRepuestos', '555-1007', 'ventas@tecnorepuestos.com', 'Av. Técnica 789'),
+    ('Distribuidora Eléctrica Sur', '555-1008', 'des@correo.com', 'Av. Sur 321'),
+    ('Mayorista Global', '555-1009', 'global@mayorista.com', 'Calle Principal 77, Centro'),
+    ('Comercial Sigma', '555-1010', 'contacto@sigmacom.com', 'Zona 4, Calle 10 #34');
 
 -- Categorías (sin cambios necesarios)
 INSERT INTO Categorias (Nombre, Descripcion) VALUES
