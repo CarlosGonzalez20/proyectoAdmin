@@ -31,6 +31,16 @@ VALUES
     ('CompuTrend', '555-0105', 'orders@computrend.com', '202 Circuit Dr, City');
 GO
 
+ --   Insert Clientes (5 suppliers)
+INSERT INTO proyAdmin.Clientes (Nombre, Telefono, Email, Direccion)
+VALUES 
+    ('Coca-Cola Distribuciones', '555-1001', 'ventas@cocacola.com', 'Avenida Central 123, Ciudad'),
+    ('Distribuidora La Moderna', '555-1002', 'contacto@lamoderna.com', 'Calle 45, Zona Industrial'),
+    ('Ferretería El Tornillo', '555-1003', 'eltornillo@correo.com', 'Boulevard Norte 500, Ciudad'),
+    ('Grupo Logístico Norte', '555-1004', 'info@lognorte.com', 'Ruta Nacional 7, Km 15'),
+    ('Supermercado Central', '555-1005', 'compras@supercentral.com', 'Av. Las Américas 1200');
+GO
+
 -- 3. Insert Categorias (5 categories)
 INSERT INTO proyAdmin.Categorias (Nombre, Descripcion)
 VALUES 
