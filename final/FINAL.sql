@@ -20,6 +20,14 @@ CREATE TABLE Proveedores (
     Direccion VARCHAR(200)
 ) ENGINE=InnoDB;
 
+CREATE TABLE Clientes (
+    IdCliente INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(100) NOT NULL,
+    Telefono VARCHAR(20),
+    Email VARCHAR(100),
+    Direccion VARCHAR(200)
+) ENGINE=InnoDB;
+
 -- 3. Categorías de Productos
 CREATE TABLE Categorias (
     IdCategoria INT PRIMARY KEY AUTO_INCREMENT,
@@ -101,6 +109,11 @@ CREATE TABLE DetalleSalidas (
     FOREIGN KEY (IdSalida) REFERENCES Salidas(IdSalida) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (IdProducto) REFERENCES Productos(IdProducto) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+ALTER TABLE Salidas
+ADD COLUMN IdCliente INT AFTER IdBodega,
+ADD CONSTRAINT FK_Salidas_Clientes FOREIGN KEY (IdCliente)
+REFERENCES Clientes(IdCliente) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- TRIGGER PARA AUMENTAR STOCK
 DELIMITER //
@@ -269,6 +282,61 @@ BEGIN
     INSERT INTO DetalleSalidas(IdSalida, IdProducto, Cantidad)
     VALUES(v_nueva_salida, p_id_producto, p_cantidad);
     
+    COMMIT;
+END//
+
+DELIMITER ;
+
+-- Crear el procedimiento sp_insertar_salida_con_cliente
+
+DELIMITER //
+
+CREATE PROCEDURE sp_insertar_salida_con_cliente(
+    IN p_id_usuario INT,
+    IN p_id_bodega INT,
+    IN p_id_cliente INT,
+    IN p_destino VARCHAR(200),
+    IN p_id_producto INT,
+    IN p_cantidad INT
+)
+BEGIN
+    DECLARE v_nueva_salida INT;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    -- Validaciones
+    IF NOT EXISTS (SELECT 1 FROM Usuarios WHERE IdUsuario = p_id_usuario) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario no existe';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Bodegas WHERE IdBodega = p_id_bodega) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Bodega no existe';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Clientes WHERE IdCliente = p_id_cliente) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cliente no existe';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Productos WHERE IdProducto = p_id_producto) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Producto no existe';
+    END IF;
+
+    -- Insertar salida
+    INSERT INTO Salidas(IdUsuario, IdBodega, IdCliente, Destino)
+    VALUES(p_id_usuario, p_id_bodega, p_id_cliente, p_destino);
+
+    SET v_nueva_salida = LAST_INSERT_ID();
+
+    -- Insertar detalle de salida
+    INSERT INTO DetalleSalidas(IdSalida, IdProducto, Cantidad)
+    VALUES(v_nueva_salida, p_id_producto, p_cantidad);
+
     COMMIT;
 END//
 
