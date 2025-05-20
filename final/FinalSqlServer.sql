@@ -135,12 +135,15 @@ CREATE TABLE proyAdmin.Salidas (
     FechaSalida DATETIME DEFAULT GETDATE(),
     IdUsuario INT,
     IdBodega INT,
+    IdCliente INT,  
     Destino NVARCHAR(200),
-	[Fecha]  AS (CONVERT([date],[FechaSalida])) PERSISTED,
+    [Fecha] AS (CONVERT([date],[FechaSalida])) PERSISTED,  
     CONSTRAINT FK_Salidas_Usuarios FOREIGN KEY (IdUsuario) 
         REFERENCES proyAdmin.Usuarios(IdUsuario) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT FK_Salidas_Bodegas FOREIGN KEY (IdBodega) 
-        REFERENCES proyAdmin.Bodegas(IdBodega) ON DELETE SET NULL ON UPDATE NO ACTION
+        REFERENCES proyAdmin.Bodegas(IdBodega) ON DELETE SET NULL ON UPDATE NO ACTION,
+    CONSTRAINT FK_Salidas_Clientes FOREIGN KEY (IdCliente) 
+        REFERENCES proyAdmin.Clientes(IdCliente) ON DELETE SET NULL ON UPDATE CASCADE
 );
 GO
 
