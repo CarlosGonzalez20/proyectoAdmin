@@ -471,7 +471,9 @@ SELECT
     de.IdProducto,
     de.Cantidad,
     de.PrecioUnitario,
-	de.Cantidad * de.PrecioUnitario as PrecioTotal
+	de.Cantidad * de.PrecioUnitario as PrecioTotal,
+    e.IdProveedor,
+    0 AS IdCliente
 FROM proyAdmin.Entradas e
 JOIN proyAdmin.DetalleEntradas de ON e.IdEntrada = de.IdEntrada
 UNION ALL
@@ -486,6 +488,8 @@ SELECT
     ds.Cantidad,
     pr.Precio,
 	ds.Cantidad * pr.Precio
+    0 As IdProveedor
+    s.IdCliente
 FROM proyAdmin.Salidas s
 JOIN proyAdmin.DetalleSalidas ds ON s.IdSalida = ds.IdSalida
 JOIN proyadmin.Productos pr on ds.IdProducto = pr.IdProducto
