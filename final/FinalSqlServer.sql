@@ -455,12 +455,12 @@ GO
 
 --Vista fact table
 -- Drop the view if it already exists
-IF OBJECT_ID('proyAdmin.Movimientos', 'V') IS NOT NULL
+IF OBJECT_ID('proyAdmin.vw_Movimientos', 'V') IS NOT NULL
     DROP VIEW proyAdmin.Movimientos;
 GO
 
 -- Create the Movimientos view
-CREATE VIEW proyAdmin.Movimientos AS
+CREATE VIEW [proyAdmin].[vw_Movimientos] AS
 SELECT 
     e.IdEntrada AS IdMovimiento,
     'Entrada' AS TipoMovimiento,
@@ -487,10 +487,28 @@ SELECT
     ds.IdProducto,
     ds.Cantidad,
     pr.Precio,
-	ds.Cantidad * pr.Precio
-    0 As IdProveedor
+	ds.Cantidad * pr.Precio,
+    0 As IdProveedor,
     s.IdCliente
 FROM proyAdmin.Salidas s
 JOIN proyAdmin.DetalleSalidas ds ON s.IdSalida = ds.IdSalida
 JOIN proyadmin.Productos pr on ds.IdProducto = pr.IdProducto
+GO
+
+-- Create the Productos view
+IF OBJECT_ID('proyAdmin.vw_Productos', 'V') IS NOT NULL
+    DROP VIEW proyAdmin.Productos;
+GO
+
+CREATE VIEW [proyAdmin].[vw_Productos] AS
+SELECT
+prd.[IdProducto], 
+prd.[Nombre], 
+cat.Nombre [Categoria],
+cat.Descripcion [Descripcion_Categoria],
+prd.[Descripcion], 
+prd.[IdCategoria], 
+prd.[Precio]
+FROM proyAdmin.Productos prd
+LEFT JOIN proyAdmin.Categorias cat ON prd.IdCategoria = cat.IdCategoria
 GO
