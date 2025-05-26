@@ -199,3 +199,28 @@ GO
 ALTER TABLE proyAdmin.DetalleEntradas ENABLE TRIGGER trg_actualizar_inventario_entrada;
 ALTER TABLE proyAdmin.DetalleSalidas ENABLE TRIGGER trg_actualizar_inventario_salida;
 GO
+
+
+
+
+
+--Ajuste inventario para evitar stock negativo
+update proyAdmin.DetalleEntradas set cantidad = cantidad + 150
+where IdProducto in (
+1
+,3
+,5
+,6
+,7
+,8
+,9
+,10
+,11
+,12
+,14
+,15
+,16
+,17
+,18
+,19
+)
